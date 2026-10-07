@@ -1,5 +1,6 @@
 package com.ruben.aplicaciones_clase.ImcApp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -11,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.slider.RangeSlider
 import com.ruben.aplicaciones_clase.R
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 
 class ImcActivity : AppCompatActivity() {
 
@@ -91,12 +93,21 @@ class ImcActivity : AppCompatActivity() {
         btnCalculate.setOnClickListener {
             val result: Double = calculateIMC()
             Log.i("IMC", "El IMC es $result")
-            //navigateToResult(result)
+            navigateToResult(result)
         }
     }
 
+    private fun navigateToResult(result: Double) {
+        var intent = Intent(this, ResultActivity::class.java)
+        intent.putExtra("extra_IMC",result)
+        startActivity(intent)
+    }
+
     private fun calculateIMC(): Double {
+        val dfs = DecimalFormatSymbols()
+        dfs.decimalSeparator = '.'
         val df = DecimalFormat("#.##")
+        df.decimalFormatSymbols = dfs
         val imc = currentWeight / Math.pow(currentHeight.toDouble()/100, 2.0)
 
         return df.format(imc).toDouble()

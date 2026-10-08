@@ -1,12 +1,14 @@
 package com.ruben.aplicaciones_clase.ImcApp
 
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.ruben.aplicaciones_clase.R
 
 class ResultActivity : AppCompatActivity() {
@@ -21,9 +23,22 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_result)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+
+        val main = findViewById<View>(R.id.main)
+
+        // Guardamos el padding original definido en el XML (16dp / 32dp)
+        val paddingLeft = main.paddingLeft
+        val paddingTop = main.paddingTop
+        val paddingRight = main.paddingRight
+        val paddingBottom = main.paddingBottom
+
+        ViewCompat.setOnApplyWindowInsetsListener(main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(
+                paddingLeft + systemBars.left,
+                paddingTop + systemBars.top,
+                paddingRight + systemBars.right,
+                paddingBottom + systemBars.bottom)
             insets
         }
 

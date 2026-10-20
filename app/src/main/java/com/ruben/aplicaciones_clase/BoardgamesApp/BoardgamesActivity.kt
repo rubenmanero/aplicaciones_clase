@@ -2,8 +2,12 @@ package com.ruben.aplicaciones_clase.BoardgamesApp
 
 import android.app.Dialog
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +19,7 @@ import com.ruben.aplicaciones_clase.R
 class BoardgamesActivity : AppCompatActivity() {
     private val categories = listOf(Cooperative, Deckbuilding, Euro, LCG, Legacy)
 
-    private val games = listOf (
+    private val games = mutableListOf (
         Game("Frostpunk", Cooperative),
         Game("Hero Realm", Deckbuilding),
         Game("Agricola", Euro),
@@ -55,7 +59,40 @@ class BoardgamesActivity : AppCompatActivity() {
     private fun showDialog() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_game)
+
+        val btnAddGame: CardView = dialog.findViewById(R.id.btnAddGame)
+        val etGame: EditText = dialog.findViewById(R.id.etGame)
+        val rgCategories: RadioGroup = dialog.findViewById(R.id.rgCategories)
+
+        btnAddGame.setOnClickListener {
+            val currentGame = etGame.text.toString()
+            if(currentGame.isNotEmpty()){
+                val selectedId = rgCategories.checkedRadioButtonId
+                val selectedRadioButton: RadioButton = rgCategories.findViewById(selectedId)
+
+                val currentCategory: GameCategory = when(selectedRadioButton.text) {
+                    getString(R.string.bgapp_cooperative_category) -> Cooperative
+                    getString(R.string.bgapp_deckbuilding_category) -> Deckbuilding
+                    getString(R.string.bgapp_lcg_category) -> LCG
+                    getString(R.string.bgapp_euro_category) -> Euro
+                    else -> Legacy
+                }
+                games.add(Game(currentGame,currentCategory))
+                updateGames()
+                dialog.hide()
+            }
+        }
+
         dialog.show()
+    }
+
+    private fun updateGames() {
+        gamesAdapter.notifyDataSetChanged()
+    }
+
+    private fun onGameSelected(position: Int) {
+        games[position].isSelected = !games[position].isSelected
+        updateGames()
     }
 
     private fun initUI() {
@@ -63,7 +100,7 @@ class BoardgamesActivity : AppCompatActivity() {
         rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvCategories.adapter = categoriesAdapter
 
-        gamesAdapter = GamesAdapter(games)
+        gamesAdapter = GamesAdapter(games) { position -> onGameSelected(position) }
         rvGames.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvGames.adapter = gamesAdapter
     }

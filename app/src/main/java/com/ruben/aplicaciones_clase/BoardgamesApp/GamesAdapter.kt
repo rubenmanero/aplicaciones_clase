@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ruben.aplicaciones_clase.R
 
-class GamesAdapter (private val games: List<Game>): RecyclerView.Adapter<GamesViewHolder>() {
+class GamesAdapter (private val games: List<Game>, private val onItemSelected: (Int) -> Unit): RecyclerView.Adapter<GamesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GamesViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_game,parent,false)
@@ -14,6 +14,7 @@ class GamesAdapter (private val games: List<Game>): RecyclerView.Adapter<GamesVi
 
     override fun onBindViewHolder(holder: GamesViewHolder, position: Int) {
         holder.render(games[position])
+        holder.itemView.setOnClickListener { onItemSelected(position) }
     }
 
     override fun getItemCount() = games.size

@@ -87,16 +87,28 @@ class BoardgamesActivity : AppCompatActivity() {
     }
 
     private fun updateGames() {
+        val selectedCategories: List<GameCategory> = categories.filter { category ->
+            category.isSelected
+        }
+        val newGames: List<Game> = games.filter { selectedCategories.contains(it.category)}
+        gamesAdapter.games = newGames
+
         gamesAdapter.notifyDataSetChanged()
     }
 
     private fun onGameSelected(position: Int) {
-        games[position].isSelected = !games[position].isSelected
+        gamesAdapter.games[position].isSelected = !gamesAdapter.games[position].isSelected
+        updateGames()
+    }
+
+    private fun onCategorySelected(position: Int) {
+        categories[position].isSelected = !categories[position].isSelected
+        categoriesAdapter.notifyItemChanged(position)
         updateGames()
     }
 
     private fun initUI() {
-        categoriesAdapter = CategoriesAdapter(categories)
+        categoriesAdapter = CategoriesAdapter(categories) { position -> onCategorySelected(position) }
         rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvCategories.adapter = categoriesAdapter
 

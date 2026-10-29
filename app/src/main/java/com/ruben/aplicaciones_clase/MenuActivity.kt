@@ -11,6 +11,8 @@ import com.ruben.aplicaciones_clase.BoardgamesApp.BoardgamesActivity
 import com.ruben.aplicaciones_clase.HelloApp.MainActivity
 import com.ruben.aplicaciones_clase.ImcApp.ImcActivity
 import com.ruben.aplicaciones_clase.MessageApp.MessageActivity
+import com.ruben.aplicaciones_clase.SuperheroApp.SuperheroListActivity
+import kotlin.jvm.java
 
 class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +35,9 @@ class MenuActivity : AppCompatActivity() {
 
         val btnBoardgamesApp = findViewById<Button>(R.id.btnBoardgamesApp)
         btnBoardgamesApp.setOnClickListener { navigateToBoardgamesApp() }
+
+        val btnSuperheroApp = findViewById<Button>(R.id.btnSuperheroApp)
+        btnSuperheroApp.setOnClickListener { navigateToSuperheroApp() }
     }
 
     private fun navigateToHelloApp() {
@@ -52,6 +57,11 @@ class MenuActivity : AppCompatActivity() {
 
     private fun navigateToBoardgamesApp() {
         val intent = Intent(this, BoardgamesActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToSuperheroApp() {
+        val intent = Intent(this, SuperheroListActivity::class.java)
         startActivity(intent)
     }
 }

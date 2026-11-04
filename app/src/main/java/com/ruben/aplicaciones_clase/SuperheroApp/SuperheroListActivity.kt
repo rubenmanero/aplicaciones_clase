@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ruben.aplicaciones_clase.R
 import com.ruben.aplicaciones_clase.databinding.ActivitySuperheroListBinding
 import kotlinx.coroutines.CoroutineScope
@@ -20,6 +22,7 @@ class SuperheroListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySuperheroListBinding
     private lateinit var retrofit: Retrofit
+    private lateinit var adapter: SuperheroAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,14 +47,27 @@ class SuperheroListActivity : AppCompatActivity() {
                 return false
             }
         })
+        adapter = SuperheroAdapter()
+        binding.rvSuperhero.setHasFixedSize(true)
+        binding.rvSuperhero.layoutManager = LinearLayoutManager(this)
+        binding.rvSuperhero.adapter = adapter
     }
 
     private fun searchByName(query: String) {
+        binding.progressBar.isVisible = true
         CoroutineScope(Dispatchers.IO).launch {
             val myResponse: Response<SuperheroDataResponse> =
                 retrofit.create(ApiService::class.java).getSuperheroes(query)
             if(myResponse.isSuccessful) {
                 Log.i("Consulta","Funciona :)")
+                val response: SuperheroDataResponse? = myResponse.body()
+                if(response!=null) {
+                    Log.i("Cuerpo de la consulta", response.toString())
+                    runOnUiThread{
+                        adapter.updateList(response.superheroes)
+                        binding.progressBar.isVisible = false
+                    }
+                }
             } else {
                 Log.i("Consulta","No funciona :(")
             }

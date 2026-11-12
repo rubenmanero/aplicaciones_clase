@@ -2,12 +2,13 @@ package com.ruben.aplicaciones_clase.SuperheroApp
 
 import com.google.gson.annotations.SerializedName
 
-data class SuperheroDetailResponse (
+data class SuperheroDetailResponse(
     @SerializedName("id") val id: String,
     @SerializedName("name") val name: String,
     @SerializedName("powerstats") val powerstats: PowerStatsResponse,
+    @SerializedName("image") val image: SuperheroImageDetailResponse,
     @SerializedName("biography") val biography: Biography,
-    @SerializedName("image") val image: SuperheroImageDetailResponse
+    @SerializedName("appearance") val appearance: Appearance
 )
 
 data class PowerStatsResponse(
@@ -19,12 +20,18 @@ data class PowerStatsResponse(
     @SerializedName("combat") val combat: String
 )
 
+data class SuperheroImageDetailResponse(@SerializedName("url") val url:String)
+
 data class Biography(
-    @SerializedName("full-name") val fullName: String,
-    @SerializedName("publisher") val publisher: String
+    @SerializedName("full-name") val fullName:String,
+    @SerializedName("publisher") val publisher:String,
+    @SerializedName("place-of-birth") val birthPlace:String,
+    @SerializedName("alter-egos") val alteregos:String,
+    @SerializedName("first-appearance") val firstAppearance:String
 )
 
-data class SuperheroImageDetailResponse(
-    @SerializedName("url") val url: String
+data class Appearance(
+    @SerializedName("race") val race:String,
+    @SerializedName("height") val height:List<String>,
+    @SerializedName("weight") val weight:List<String>
 )
-

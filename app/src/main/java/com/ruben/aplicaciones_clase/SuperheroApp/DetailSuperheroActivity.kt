@@ -25,15 +25,9 @@ class DetailSuperheroActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityDetailSuperheroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
         val id: String = intent.getStringExtra(EXTRA_ID).orEmpty()
         getSuperheroInformation(id)
     }
@@ -54,12 +48,54 @@ class DetailSuperheroActivity : AppCompatActivity() {
 
     private fun createUI(superhero: SuperheroDetailResponse) {
         binding.ivSuperhero.load(superhero.image.url)
-
         binding.tvSuperheroName.text = superhero.name
         binding.tvSuperheroRealName.text = superhero.biography.fullName
         binding.tvPublisher.text = superhero.biography.publisher
-
         prepareStats(superhero.powerstats)
+
+        val nombre = superhero.name
+        val raza = superhero.appearance.race
+        val lugar = superhero.biography.birthPlace
+        val altura = superhero.appearance.height[1]
+        val peso = superhero.appearance.weight[1]
+        val alterEgos = superhero.biography.alteregos
+        val aparicion = superhero.biography.firstAppearance
+
+        var texto = ""
+
+        if (raza != "null") {
+            texto += "$nombre es de la raza de los $raza. "
+        } else {
+            texto += "No se conoce la raza de $nombre. "
+        }
+
+        if (lugar != "null" && lugar != "-") {
+            texto += "Nació en $lugar. "
+        } else {
+            texto += "Se desconoce su lugar de nacimiento. "
+        }
+
+        if (altura != "null" && peso != "null" && altura != "0 cm" && peso != "0 kg") {
+            texto += "Mide $altura y pesa $peso."
+        } else if (altura != "null" && altura != "0 cm") {
+            texto += "Mide $altura."
+        } else if (peso != "null" && peso != "0 kg") {
+            texto += "Pesa $peso."
+        }
+
+        if (alterEgos != "No alter egos found.") {
+            texto += "\n\nSe le conoce también como $alterEgos."
+        } else {
+            texto += "\n\nNo se le conocen alter egos."
+        }
+
+        if (aparicion != "null" && aparicion != "-") {
+            texto += "\n\nSu primera aparición fue en $aparicion."
+        } else {
+            texto += "\n\nSe desconoce cuándo apareció por primera vez."
+        }
+
+        binding.tvDescription.text = texto
     }
 
     private fun prepareStats(powerstats: PowerStatsResponse) {
@@ -71,9 +107,9 @@ class DetailSuperheroActivity : AppCompatActivity() {
         updateHeight(binding.viewCombat, powerstats.combat)
     }
 
-    private fun updateHeight(view: View, stat: String) {
+    private fun updateHeight(view: View, stat:String){
         val params = view.layoutParams
-        if(stat != "null") {
+        if (stat != "null") {
             params.height = pxToDp(stat.toFloat())
         } else {
             params.height = pxToDp(0.toFloat())
@@ -84,8 +120,6 @@ class DetailSuperheroActivity : AppCompatActivity() {
     private fun pxToDp(px:Float):Int{
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, resources.displayMetrics).roundToInt()
     }
-
-
 
     private fun getRetrofit(): Retrofit {
         return Retrofit

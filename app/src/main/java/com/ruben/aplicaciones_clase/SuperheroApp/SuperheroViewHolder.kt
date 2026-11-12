@@ -10,9 +10,7 @@ class SuperheroViewHolder (view: View): RecyclerView.ViewHolder(view) {
     private val binding = ItemSuperheroBinding.bind(view)
     fun bind(superhero: SuperheroItemResponse, navigateToDetailActivity: (String) -> Unit) {
         binding.tvSuperheroName.text = superhero.name
-        binding.ivSuperhero.load("https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/" + superhero.superheroId
-                + "-" + superhero.name.lowercase().replace(" ","-")+".jpg"
-        )
+        binding.ivSuperhero.load(superhero.superheroImage.url)
         binding.root.setOnClickListener { navigateToDetailActivity(superhero.superheroId) }
     }
 }

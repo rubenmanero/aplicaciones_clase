@@ -57,7 +57,7 @@ class DetailSuperheroActivity : AppCompatActivity() {
 
         binding.tvSuperheroName.text = superhero.name
         binding.tvSuperheroRealName.text = superhero.biography.fullName
-        binding.tvSuperheroName.text = superhero.biography.publisher
+        binding.tvPublisher.text = superhero.biography.publisher
 
         prepareStats(superhero.powerstats)
     }
@@ -73,7 +73,11 @@ class DetailSuperheroActivity : AppCompatActivity() {
 
     private fun updateHeight(view: View, stat: String) {
         val params = view.layoutParams
-        params.height = pxToDp(stat.toFloat())
+        if(stat != "null") {
+            params.height = pxToDp(stat.toFloat())
+        } else {
+            params.height = pxToDp(0.toFloat())
+        }
         view.layoutParams = params
     }
 

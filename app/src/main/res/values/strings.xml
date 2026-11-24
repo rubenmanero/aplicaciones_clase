@@ -28,5 +28,15 @@
     <string name="bgapp_lcg_category">Living Card Games</string>
     <string name="bgapp_legacy_category">Legacy</string>
     <string name="dialog_newgame_button">Nuevo juego</string>
+    <string name="white">Blanco</string>
+    <string name="red">Rojo</string>
+    <string name="orange">Naranja</string>
+    <string name="yellow">Amarillo</string>
+    <string name="green">Verde</string>
+    <string name="cyan">Cián</string>
+    <string name="blue">Azul</string>
+    <string name="violet">Violeta</string>
+    <string name="gray">Gris</string>
+    <string name="black">Negro</string>
 
 </resources>

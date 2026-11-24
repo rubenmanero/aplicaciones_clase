@@ -24,5 +24,13 @@
         <item name="android:layout_marginHorizontal" tools:targetApi="o">32dp</item>
     </style>
 
+    <style name="tvReviewApp">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 
 </resources>

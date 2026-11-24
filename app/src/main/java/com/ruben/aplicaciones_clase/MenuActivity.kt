@@ -11,19 +11,15 @@ import com.ruben.aplicaciones_clase.BoardgamesApp.BoardgamesActivity
 import com.ruben.aplicaciones_clase.HelloApp.MainActivity
 import com.ruben.aplicaciones_clase.ImcApp.ImcActivity
 import com.ruben.aplicaciones_clase.MessageApp.MessageActivity
+import com.ruben.aplicaciones_clase.ReviewApp.ReviewActivity
 import com.ruben.aplicaciones_clase.SuperheroApp.SuperheroListActivity
 import kotlin.jvm.java
 
 class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_menu)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
         val btnHelloApp = findViewById<Button>(R.id.btnHelloApp)
         btnHelloApp.setOnClickListener { navigateToHelloApp() }
 
@@ -38,6 +34,9 @@ class MenuActivity : AppCompatActivity() {
 
         val btnSuperheroApp = findViewById<Button>(R.id.btnSuperheroApp)
         btnSuperheroApp.setOnClickListener { navigateToSuperheroApp() }
+
+        val btnReviewApp = findViewById<Button>(R.id.btnReviewApp)
+        btnReviewApp.setOnClickListener { navigateToReviewApp() }
     }
 
     private fun navigateToHelloApp() {
@@ -62,6 +61,11 @@ class MenuActivity : AppCompatActivity() {
 
     private fun navigateToSuperheroApp() {
         val intent = Intent(this, SuperheroListActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToReviewApp() {
+        val intent = Intent(this, ReviewActivity::class.java)
         startActivity(intent)
     }
 }

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.ruben.aplicaciones_clase.BoardgamesApp.BoardgamesActivity
+import com.ruben.aplicaciones_clase.Examen2024Dual.MemoryActivity
 import com.ruben.aplicaciones_clase.HelloApp.MainActivity
 import com.ruben.aplicaciones_clase.ImcApp.ImcActivity
 import com.ruben.aplicaciones_clase.MessageApp.MessageActivity
@@ -37,6 +38,9 @@ class MenuActivity : AppCompatActivity() {
 
         val btnReviewApp = findViewById<Button>(R.id.btnReviewApp)
         btnReviewApp.setOnClickListener { navigateToReviewApp() }
+
+        val btnMemoryApp = findViewById<Button>(R.id.btnMemory)
+        btnMemoryApp.setOnClickListener { navigateToMemoryApp() }
     }
 
     private fun navigateToHelloApp() {
@@ -66,6 +70,10 @@ class MenuActivity : AppCompatActivity() {
 
     private fun navigateToReviewApp() {
         val intent = Intent(this, ReviewActivity::class.java)
+        startActivity(intent)
+    }
+    private fun navigateToMemoryApp() {
+        val intent = Intent(this, MemoryActivity::class.java)
         startActivity(intent)
     }
 }

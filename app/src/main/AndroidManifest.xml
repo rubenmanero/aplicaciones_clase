@@ -64,6 +64,10 @@
             android:name=".ReviewApp.ReviewActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Examen2024Dual.MemoryActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

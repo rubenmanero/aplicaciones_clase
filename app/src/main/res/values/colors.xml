@@ -52,5 +52,13 @@
     <color name="blue">#002FFF</color>
     <color name="violet">#AE00FF</color>
     <color name="gray">#878787</color>
+    <color name="memory_background">#32003E</color>
+    <color name="memory_text">#E36FFF</color>
+    <color name="memory_card1">#44A6FF</color>
+    <color name="memory_card2">#074900</color>
+    <color name="memory_card3">#FF5151</color>
+    <color name="memory_card4">#6ABA19</color>
+    <color name="memory_card5">#FFE869</color>
+    <color name="memory_card6">#27369D</color>
 
 </resources>
